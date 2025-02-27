@@ -1,22 +1,31 @@
-Folosind un ESP32, scrieți un algoritm care generează o parolă random de 64 de caractere folosind alfabetul „9876543210qazwsxedcrfvtgbyhnmikolpQAZWSXEDCRFVTGBYHNUJOLP” și următorul algoritm de generare a numerelor random:
+# ESP32 Random Password Generator & Python Guessing Script
 
-class PRNG:
+This project demonstrates an approach to password generation and brute-forcing using an ESP32 and a Python script.
 
-    def __init__(self, seed=327680):
+## Project Overview
 
-        self.seed = seed
+- **ESP32 Code:**
+  - Uses a custom pseudo-random number generator (PRNG) to create a 64-character random password from a specified alphabet.
+  - Responds with **TRUE** if the guessed password is correct, or **FALSE** otherwise.
 
-        self.a = 4291010243
+- **Python Script:**
+  - Connects to the ESP32 over a serial port.
+  - Iterates through possible PRNG seeds to generate passwords.
+  - Sends those guesses to the ESP32 in a brute-force manner.
+  - When the correct password is found, the script prints a success message.
 
-        self.c = 179203
+## Running the Project
 
+### 1. Prepare the ESP32
 
-    def random(self):
+- **Open the `.ino` file** in the Arduino IDE (or PlatformIO).
+- **Select your ESP32 board** and the correct serial port under **Tools**.
+- **Click Upload** to flash the code onto the ESP32.
+- Once uploaded, the ESP32 will generate and store a random password in its memory.
 
-        self.seed = abs(self.a - self.seed * self.c) % 65536
+### 2. Install Python Dependencies
 
-        rnd = self.seed / 65536
-
-        return rnd
-
-Parola generată este secretă și rămâne doar pe ESP32. Pe laptop vom scrie un script în Python care încearcă să ghicească această parolă și va trimite parola către ESP32 pentru verificare. ESP32 va răspunde cu FALSE sau TRUE dacă parola a fost găsită sau nu.
+- Ensure you have **Python 3** installed.
+- Install **pyserial** by running:
+  ```bash
+  pip install pyserial
